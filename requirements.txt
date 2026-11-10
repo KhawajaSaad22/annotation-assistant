@@ -1,0 +1,4 @@
+numpy>=1.26
+torch>=2.2
+Pillow>=10
+streamlit>=1.40

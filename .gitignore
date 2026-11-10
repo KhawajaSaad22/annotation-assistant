@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+data/
+artifacts/
+runs/
+annotations/
+selection.json
