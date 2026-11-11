@@ -13,8 +13,8 @@ is still planned; the current mask suggestions come from the trained student.
 
 ## Quick start
 
-Create an independent environment and install `requirements.txt`. In this workspace,
-the existing sibling `../hybrid-rag/.venv` also works; it contains CPU-only PyTorch.
+Create an independent environment and install `requirements.txt`. In my workspace,
+my existing sibling `../hybrid-rag/.venv` also works; it contains CPU-only PyTorch.
 
 ```powershell
 python make_demo.py
@@ -26,9 +26,9 @@ python -m streamlit run app.py
 
 Use `random`, `uncertainty`, `diversity`, or `combined` to compare selection strategies.
 Rank output contains pool IDs, paths, entropy, and strategy. The current review UI lets
-you choose any pool image; refer to selection.json for the suggested order. It shows
+me choose any pool image; refer to selection.json for the suggested order. It shows
 the student's binary mask and accepts a corrected PNG with the original dimensions.
-You must explicitly approve a reviewed mask before saving. Saving writes a mask and
+I must explicitly approve a reviewed mask before saving. Saving writes a mask and
 audit JSON under annotations/; it never changes the manifest or silently adds labels.
 
 ```powershell
@@ -76,7 +76,7 @@ python -m unittest -v
 
 Use equal human-time budgets. Teacher predictions are suggestions, not ground truth.
 Keep test images out of active selection and model tuning. Record corrections and time
-per image. On the 8 GB GPU, run teacher and student sequentially.
+per image. On my 8 GB GPU, run teacher and student sequentially.
 
 ## Docker image
 
@@ -118,9 +118,9 @@ docker compose logs -f app
 docker compose down
 ```
 
-`down` keeps named volumes; `down -v` deletes them, including your generated work.
+`down` keeps named volumes; `down -v` deletes them, including my generated work.
 The app port is published on localhost only. Container health means Streamlit is running;
-you still need to prepare data and fit/index models before using the app workflow.
+I still need to prepare data and fit/index models before using the app workflow.
 
 ```sh
 docker compose exec app python make_demo.py
