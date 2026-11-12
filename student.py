@@ -27,11 +27,15 @@ def rows(path):
         if r.get('split') not in ('train','validation','test','pool'): raise ValueError('Invalid split')
         for key in ('image','mask'):
             if r.get(key): r[key]=str((path.parent/r[key]).resolve())
-    hashes={}
+    hashes={}; groups={}
     for r in records:
         h=hashlib.sha256(Path(r['image']).read_bytes()).hexdigest()
         if h in hashes and hashes[h]!=r['split']: raise ValueError('Image content overlaps splits')
         hashes[h]=r['split']
+        if r.get('group'):
+            if r['group'] in groups and groups[r['group']]!=r['split']:
+                raise ValueError('Acquisition group overlaps splits')
+            groups[r['group']]=r['split']
     return records
 
 def image_tensor(path,size=96):

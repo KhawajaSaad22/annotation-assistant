@@ -5,6 +5,18 @@ from student import Student,metrics,Segments,rows
 from torch.utils.data import DataLoader,TensorDataset
 
 class Tests(unittest.TestCase):
+    def test_acquisition_group_leakage_rejected(self):
+        import tempfile,json
+        from pathlib import Path
+        from PIL import Image
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            Image.new('RGB',(8,8),'red').save(root/'a.png')
+            Image.new('RGB',(8,8),'green').save(root/'b.png')
+            manifest=root/'manifest.json'; manifest.write_text(json.dumps([
+                dict(id='a',image='a.png',split='train',group='same-flight'),
+                dict(id='b',image='b.png',split='test',group='same-flight')]))
+            with self.assertRaisesRegex(ValueError,'group overlaps'): rows(manifest)
     def test_shape_and_gradient(self):
         m=Student(); x=torch.rand(2,3,24,24); y=m(x)
         self.assertEqual(tuple(y.shape),(2,1,24,24)); y.mean().backward()
@@ -33,6 +45,7 @@ class Tests(unittest.TestCase):
             manifest=[dict(id='pool',image='pool.png',split='pool'),dict(id='test',image='test.png',split='test',mask='mask.png')]
             (root/'manifest.json').write_text(json.dumps(manifest))
             audit=dict(id='pool',image_sha256=hashlib.sha256((root/'pool.png').read_bytes()).hexdigest(),mask=str(root/'mask.png'),source='human_uploaded_correction',review_seconds=2)
+            audit.update(schema_version=2,mask_sha256=hashlib.sha256((root/'mask.png').read_bytes()).hexdigest(),checkpoint_sha256='test-checkpoint')
             (root/'reviews'/'audit.json').write_text(json.dumps(audit))
             with patch.object(sys,'argv',['import_reviews.py',str(root/'manifest.json'),'--reviews',str(root/'reviews'),'--output',str(root/'round2.json')]): main()
             result=json.loads((root/'round2.json').read_text())

@@ -1,5 +1,12 @@
 # Verification and remaining work
 
+Reliability update (12 November 2026): approved-mask hashes are verified on import,
+approval resets on changed review inputs, checkpoint identity is preserved, binary
+mask values are checked, and optional acquisition groups cannot cross splits.
+Legacy audits require re-review. Regression checks include changed masks and actual
+Streamlit checkbox reset behavior for changed images/checkpoints. Earlier results
+below remain synthetic; real annotation savings and GPU behavior are not established.
+
 Working: small PyTorch segmentation model; seeded training; validation-selected weights;
 held-out test evaluation; four pool-selection modes; predicted-mask review UI; correction
 upload; mask/provenance/time records; explicit import to a new training round.

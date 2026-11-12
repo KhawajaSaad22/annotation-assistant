@@ -42,6 +42,20 @@ review records before subsequent rounds so only the current round is imported.
 Validation and test splits are unchanged. Imported manifests use absolute local paths;
 do not publish them if they contain private image paths.
 
+## Review integrity update
+
+Approval is bound to the current image, checkpoint and accepted mask. Changing any
+of those inputs clears approval. Version-2 review records include image, mask and
+checkpoint SHA-256 values. Import rejects a changed mask or image, nonbinary masks,
+invalid review times and old records without these checks. For a legacy review,
+reopen the image and approve its mask again; archive the old review before import.
+The checkpoint hash is preserved as provenance; the original checkpoint does not
+need to remain available to import an otherwise valid review.
+
+An optional `group` field identifies an acquisition session/physical object.
+If supplied, the same group cannot cross train/validation/test/pool splits.
+Define groups before collecting labels to avoid promoting related test views.
+
 ## Custom data and protocol
 
 A manifest is a JSON list with unique `id`, relative `image`, `split`, and optional
