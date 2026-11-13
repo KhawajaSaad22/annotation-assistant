@@ -1,5 +1,11 @@
 # Verification and remaining work
 
+GPU update (13 November 2026): the student trained for five synthetic epochs on my
+RTX 4060 in a Linux CUDA container. Training, inference, pool ranking and CPU/GPU
+prediction parity passed. GPU Compose overrides are available; see GPU.md for the
+verified environment and limits. The older CPU-only validation statements below
+describe their original checks, not the new GPU execution path.
+
 Reliability update (12 November 2026): approved-mask hashes are verified on import,
 approval resets on changed review inputs, checkpoint identity is preserved, binary
 mask values are checked, and optional acquisition groups cannot cross splits.

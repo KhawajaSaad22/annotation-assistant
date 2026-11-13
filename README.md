@@ -1,5 +1,9 @@
 # Annotation assistant — project 3
 
+GPU update: training, prediction and ranking now support automatic/explicit CUDA
+execution. See [GPU.md](GPU.md) for the RTX 4060 validation and GPU container command.
+The default published container is still CPU-compatible; use the GPU override locally.
+
 Status: runnable binary segmentation MVP: a small PyTorch student, seeded training,
 validation-selected checkpoints, held-out testing, pool ranking, a review interface,
 provenance records, and import into a new training-round manifest.
